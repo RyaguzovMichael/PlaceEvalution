@@ -14,5 +14,8 @@ public class UserDbMap : IEntityTypeConfiguration<UserDbModel>
         builder.Property(p => p.Password).HasColumnType("VARCHAR(100)").HasDefaultValue("").IsRequired();
         builder.Property(p => p.Name).HasColumnType("VARCHAR(100)").HasDefaultValue("Default").IsRequired();
         builder.Property(p => p.Surname).HasColumnType("VARCHAR(100)").HasDefaultValue("User").IsRequired();
+        builder.HasMany<ReviewDbModel>(u => u.Reviews)
+               .WithOne(r => r.User)
+               .HasForeignKey(r => r.UserId);
     }
 }

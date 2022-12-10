@@ -33,7 +33,7 @@ public class UserDbService : IUserDbService
         UserDbModel? model = await _userRepository.GetFirstOrDefaultAsync(u => u.Login == login, cancellationToken);
         if (model is null)
         {
-            throw new DbException($"User with login {login} not found in DB");
+            throw new DatabaseException($"User with login {login} not found in DB");
         }
         return new UserEntity(model.Id, model.Login, model.Password);
     }
@@ -43,7 +43,7 @@ public class UserDbService : IUserDbService
         UserDbModel? model = await _userRepository.GetFirstOrDefaultAsync(u => u.Id == identity.Id, cancellationToken);
         if (model is null)
         {
-            throw new DbException($"User with Id {identity.Id} not found in DB");
+            throw new DatabaseException($"User with Id {identity.Id} not found in DB");
         }
         return new UserEntity(model.Id, model.Login, model.Password);
     }
@@ -53,7 +53,7 @@ public class UserDbService : IUserDbService
         UserDbModel? model = await _userRepository.GetFirstOrDefaultAsync(u => u.Id == identity.Id, cancellationToken);
         if (model is null)
         {
-            throw new DbException($"User with Id {identity.Id} not found in DB");
+            throw new DatabaseException($"User with Id {identity.Id} not found in DB");
         }
         return new CustomerEntity(model.Id, model.Name, model.Surname);
     }
@@ -63,7 +63,7 @@ public class UserDbService : IUserDbService
         UserDbModel? model = await _userRepository.GetFirstOrDefaultAsync(u => u.Id == user.Id, cancellationToken);
         if (model is null)
         {
-            throw new DbException($"User with Id {user.Id} not found in DB");
+            throw new DatabaseException($"User with Id {user.Id} not found in DB");
         }
         model.Login = user.Login;
         model.Password = user.Password;
@@ -75,7 +75,7 @@ public class UserDbService : IUserDbService
         UserDbModel? model = await _userRepository.GetFirstOrDefaultAsync(u => u.Id == identity.Id, cancellationToken);
         if (model is null)
         {
-            throw new DbException($"User with Id {identity.Id} not found in DB");
+            throw new DatabaseException($"User with Id {identity.Id} not found in DB");
         }
         model.Name = name;
         model.Surname = surname;
@@ -87,7 +87,7 @@ public class UserDbService : IUserDbService
         UserDbModel? model = _userRepository.GetFirstOrDefaultAsync(u => u.Id == identity.Id, new CancellationToken()).Result;
         if (model is null)
         {
-            throw new DbException($"User with Id {identity.Id} not found in DB");
+            throw new DatabaseException($"User with Id {identity.Id} not found in DB");
         }
         return new CustomerEntity(model.Id, model.Name, model.Surname);
     }

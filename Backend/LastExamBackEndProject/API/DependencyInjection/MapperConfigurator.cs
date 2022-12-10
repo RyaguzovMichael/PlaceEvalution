@@ -25,8 +25,8 @@ public static class MapperConfigurator
                 .ForMember(r => r.ReviewDate, o => o.MapFrom(p => p.ReviewDate.ToLongDateString()))
                 .ForMember(r => r.Customer, o => o.MapFrom( p => userFactory.GetCustomer(p.User)));
             CreateMap<Place, PlaceShortVm>()
-                .ForMember(r => r.PhotosCount, o => o.MapFrom(p => p.Photos.Count ?? 0))
-                .ForMember(r => r.ReviewsCount, o => o.MapFrom(p => p.Reviews.Count ?? 0));
+                .ForMember(r => r.PhotosCount, o => o.MapFrom(p => p.Photos == null ? 0 : p.Photos.Count))
+                .ForMember(r => r.ReviewsCount, o => o.MapFrom(p => p.Reviews == null ? 0 : p.Reviews.Count));
         }
     }
 }

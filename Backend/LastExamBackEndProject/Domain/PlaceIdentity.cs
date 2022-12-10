@@ -1,21 +1,19 @@
 ﻿namespace LastExamBackEndProject.Domain;
 
-public class UserIdentity
+public class PlaceIdentity
 {
-    public int Id { get; private set; }
-    public UserRoles Role { get; set; }
+    public int Id { get; set; }
 
-    public UserIdentity(int id, UserRoles role = UserRoles.User)
+    public PlaceIdentity(int id)
     {
         Id = id;
-        Role = role;
     }
 
     public sealed override bool Equals(object? obj)
     {
-        if (obj is UserIdentity user)
+        if (obj is PlaceIdentity palce)
         {
-            return Id == user.Id;
+            return Id == palce.Id;
         }
 
         return false;

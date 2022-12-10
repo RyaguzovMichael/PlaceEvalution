@@ -1,21 +1,19 @@
 ﻿namespace LastExamBackEndProject.Domain;
 
-public class UserIdentity
+public class ReviewIdentity
 {
     public int Id { get; private set; }
-    public UserRoles Role { get; set; }
 
-    public UserIdentity(int id, UserRoles role = UserRoles.User)
+    public ReviewIdentity(int id)
     {
         Id = id;
-        Role = role;
     }
 
     public sealed override bool Equals(object? obj)
     {
-        if (obj is UserIdentity user)
+        if (obj is ReviewIdentity review)
         {
-            return Id == user.Id;
+            return Id == review.Id;
         }
 
         return false;

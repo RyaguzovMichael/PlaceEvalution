@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+    examdb:
+        image: postgres
+        container_name: examdb
+        environment:
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=12345
+          - POSTGRES_DB=ExamDb
+        restart: always
+        ports:
+          - "5435:5432"
+        volumes:
+          - postgres_data:/var/lib/postgressql/coursesData
+
+    lastexambackendproject:
+        image: ${DOCKER_REGISTRY-}lastexambackendproject
+        build:
+            context: .
+            dockerfile: Backend/LastExamBackEndProject/Dockerfile
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - "ConnectionStrings:DbConnectionString=Server=examdb;Port=5432;UserId=postgres;Password=12345;"
+        depends_on:
+            - examdb
+        ports:
+            - "5555:80"
+        volumes:
+            - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+volumes:
+  postgres_data:

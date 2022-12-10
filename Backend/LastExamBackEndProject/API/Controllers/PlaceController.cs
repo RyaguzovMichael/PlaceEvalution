@@ -40,7 +40,7 @@ public class PlaceController : Controller
         Summary = "Создание заведения",
         Description = "Для создания необходимо ввести название заведения описание заведения и передать файл с фотографией")
     ]
-    public async Task<ActionResult<DefaultResponse<bool>>> Create([FromBody] CreatePlaceCommand request, CancellationToken cancellationToken)
+    public async Task<ActionResult<DefaultResponse<bool>>> Create([FromForm] CreatePlaceCommand request, CancellationToken cancellationToken)
     {
         SessionData? sessionData = HttpContext.Session.GetData();
         if (sessionData?.UserIdentity is null)
@@ -136,7 +136,7 @@ public class PlaceController : Controller
         Summary = "Добавление фото для заведения",
         Description = "Для добавления необходимо ввести Id заведения, и загрузить файл с фото")
     ]
-    public async Task<ActionResult<DefaultResponse<PlaceVm>>> AddPhoto([FromBody] AddPhotoCommand request, CancellationToken cancellationToken)
+    public async Task<ActionResult<DefaultResponse<PlaceVm>>> AddPhoto([FromForm] AddPhotoCommand request, CancellationToken cancellationToken)
     {
         SessionData? sessionData = HttpContext.Session.GetData();
         if (sessionData?.UserIdentity is null)

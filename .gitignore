@@ -10,3 +10,6 @@ riderModule.iml
 
 # Visual Studio
 .vs
+
+# LocalFiles
+/Backend/LastExamBackEndProject/wwwroot/*

@@ -24,6 +24,7 @@ app.UseMiddleware<GlobalExceptionHandler>();
 app.UseSwaggerUiInDev();
 
 app.UseCors("CorsPolicy");
+app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
 

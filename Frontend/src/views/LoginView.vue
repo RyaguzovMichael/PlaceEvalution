@@ -66,6 +66,11 @@ export default {
       passwordConfirmationError: null
     }
   },
+  beforeMount(){
+    if (this.logined) {
+      this.$router.push('/')
+    }
+  },
   methods: {
     async loginUser(){
       if(!this.checkLoginData()) return;
@@ -74,11 +79,25 @@ export default {
         console.log(response.data);
         if (response.data.isSuccess) {
           this.$emit('changeLoginedState', true)
+          this.$router.push('/')
         }
         else if (response.data.exceptionCode) {
+          let message = ""
           switch (response.data.exceptionCode) {
-
+            case 1:
+              message += "Ошибка введённых данных " + response.data.exception
+              break;
+            case 2:
+              message += "Пользователь не имеет доступа к данному действию"
+              break;
+            case 3:
+              message += "Пользователю необходимо авторизоваться"
+              break;
+            case 4:
+              message += "Ошибка записи данных в БД " + response.data.exception
+              break;
           }
+          this.$notify(message)
         }
       } catch (error) {
         console.log(error.message);
@@ -91,11 +110,25 @@ export default {
         console.log(response.data);
         if (response.data.isSuccess) {
           this.$emit('changeLoginedState', true)
+          this.$router.push('/')
         }
         else if (response.data.exceptionCode) {
+          let message = ""
           switch (response.data.exceptionCode) {
-
+            case 1:
+              message += "Ошибка введённых данных " + response.data.exception
+              break;
+            case 2:
+              message += "Пользователь не имеет доступа к данному действию"
+              break;
+            case 3:
+              message += "Пользователю необходимо авторизоваться"
+              break;
+            case 4:
+              message += "Ошибка записи данных в БД " + response.data.exception
+              break;
           }
+          this.$notify(message)
         }
       } catch (error) {
         console.log(error.message);
@@ -120,7 +153,7 @@ export default {
       else{
         this.loginValidationErrors.passwordError = null
       }
-      
+
       return result
     },
     checkRegisterData(){

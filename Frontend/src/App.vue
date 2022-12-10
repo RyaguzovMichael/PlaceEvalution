@@ -1,8 +1,10 @@
 <template>
   <router-view :logined="logined" @changeLoginedState="changeLoginedState"/>
+  <notifications />
 </template>
 
 <script>
+import { response } from "express";
 import { checkSessionAuthorization } from "./boot/axios"
 
 export default {
@@ -14,6 +16,10 @@ export default {
   },
   beforeMount() {
     this.checkLogin();
+    
+  },
+  mounted(){
+    
   },
   methods: {
     async checkLogin() {
@@ -24,9 +30,22 @@ export default {
           this.logined = response.data.value
         }
         else if (response.data.exceptionCode) {
+          let message = ""
           switch (response.data.exceptionCode) {
-
+            case 1:
+              message += "Ошибка введённых данных " + response.data.exception
+              break;
+            case 2:
+              message += "Пользователь не имеет доступа к данному действию"
+              break;
+            case 3:
+              message += "Пользователю необходимо авторизоваться"
+              break;
+            case 4:
+              message += "Ошибка записи данных в БД " + response.data.exception
+              break;
           }
+          this.$notify(message)
         }
       } catch (error) {
         console.log(error.message);

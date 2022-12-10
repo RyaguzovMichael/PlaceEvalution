@@ -67,7 +67,7 @@ public class PlaceService
         return place;
     }
 
-    public async Task DeletePlace(PlaceIdentity placeIdentity, UserIdentity userIdentity, CancellationToken cancellationToken)
+    public async Task DeletePlaceAsync(PlaceIdentity placeIdentity, UserIdentity userIdentity, CancellationToken cancellationToken)
     {
         if (userIdentity.Role == UserRoles.Admin)
         {

@@ -4,6 +4,7 @@ using LastExamBackEndProject.Domain.Contracts;
 using LastExamBackEndProject.Infrastructure.Models;
 using LastExamBackEndProject.Infrastructure.Models.DomainEntities;
 using LastExamBackEndProject.Infrastructure.Repositories;
+using System.Threading;
 
 namespace LastExamBackEndProject.Infrastructure.Services;
 
@@ -79,5 +80,15 @@ public class UserDbService : IUserDbService
         model.Name = name;
         model.Surname = surname;
         await _userRepository.UpdateAsync(model, cancellationToken);
+    }
+
+    public Customer GetCustomerByIdentity(UserIdentity identity)
+    {
+        UserDbModel? model = _userRepository.GetFirstOrDefaultAsync(u => u.Id == identity.Id, new CancellationToken()).Result;
+        if (model is null)
+        {
+            throw new DbException($"User with Id {identity.Id} not found in DB");
+        }
+        return new CustomerEntity(model.Id, model.Name, model.Surname);
     }
 }

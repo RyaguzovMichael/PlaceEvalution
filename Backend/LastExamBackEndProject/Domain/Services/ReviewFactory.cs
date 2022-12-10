@@ -26,4 +26,9 @@ public class ReviewFactory
     {
         return await _reviewDbService.GetReviewByIdentityAsync(identity, cancellationToken);
     }
+
+    public async Task<Review> GetReviewAsync(int id, CancellationToken cancellationToken)
+    {
+        return await _reviewDbService.GetReviewByIdAsync(id, cancellationToken);
+    }
 }

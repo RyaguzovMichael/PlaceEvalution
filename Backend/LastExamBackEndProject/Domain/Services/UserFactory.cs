@@ -1,6 +1,8 @@
 ﻿using LastExamBackEndProject.Common.Exceptions;
 using LastExamBackEndProject.Common.Extensions;
 using LastExamBackEndProject.Domain.Contracts;
+using System.Security.Principal;
+using System.Threading;
 
 namespace LastExamBackEndProject.Domain.Services;
 
@@ -40,5 +42,10 @@ public class UserFactory
     public async Task<Customer> GetCustomerAsync(UserIdentity identity, CancellationToken cancellationToken)
     {
         return await _userDbService.GetCustomerByIdentityAsync(identity, cancellationToken);
+    }
+
+    internal Customer GetCustomer(UserIdentity identity)
+    {
+        return _userDbService.GetCustomerByIdentity(identity);
     }
 }

@@ -8,7 +8,7 @@ public class User : UserIdentity
     public string Login { get; private set; }
     public string Password { get; private set; }
 
-    protected User(int id, string login, string password) : base(id)
+    protected User(int id, string login, string password, UserRoles role) : base(id, role)
     {
         Login = login;
         Password = password;
@@ -26,7 +26,7 @@ public class User : UserIdentity
             throw new ValidationDataException("Password can't be empty");
         }
 
-        return new User(identity.Id, login, password.Hash());
+        return new User(identity.Id, login, password.Hash(), identity.Role);
     }
 
     public bool CheckPassword(string password)

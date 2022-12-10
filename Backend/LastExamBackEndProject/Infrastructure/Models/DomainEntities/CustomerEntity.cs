@@ -4,5 +4,5 @@ namespace LastExamBackEndProject.Infrastructure.Models.DomainEntities;
 
 public class CustomerEntity : Customer
 {
-    public CustomerEntity(int id, string name, string surname) : base(id, name, surname) {}
+    public CustomerEntity(int id, string name, string surname, UserRoles role) : base(id, name, surname, role) {}
 }

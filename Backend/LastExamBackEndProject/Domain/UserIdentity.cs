@@ -5,7 +5,7 @@ public class UserIdentity
     public int Id { get; private set; }
     public UserRoles Role { get; set; }
 
-    public UserIdentity(int id, UserRoles role = UserRoles.User)
+    public UserIdentity(int id, UserRoles role)
     {
         Id = id;
         Role = role;

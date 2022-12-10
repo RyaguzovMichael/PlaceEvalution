@@ -25,7 +25,7 @@ public class UserDbService : IUserDbService
     public async Task<UserIdentity> GetNewUserIdentityAsync(CancellationToken cancellationToken)
     {
         UserDbModel model = await _userRepository.AddAsync(new UserDbModel(), cancellationToken);
-        return new UserIdentity(model.Id);
+        return new UserIdentity(model.Id, model.Role);
     }
 
     public async Task<User> GetUserByLoginAsync(string login, CancellationToken cancellationToken)
@@ -35,7 +35,7 @@ public class UserDbService : IUserDbService
         {
             throw new DatabaseException($"User with login {login} not found in DB");
         }
-        return new UserEntity(model.Id, model.Login, model.Password);
+        return new UserEntity(model.Id, model.Login, model.Password, model.Role);
     }
 
     public async Task<User> GetUserByIdentityAsync(UserIdentity identity, CancellationToken cancellationToken)
@@ -45,7 +45,7 @@ public class UserDbService : IUserDbService
         {
             throw new DatabaseException($"User with Id {identity.Id} not found in DB");
         }
-        return new UserEntity(model.Id, model.Login, model.Password);
+        return new UserEntity(model.Id, model.Login, model.Password, model.Role);
     }
 
     public async Task<Customer> GetCustomerByIdentityAsync(UserIdentity identity, CancellationToken cancellationToken)
@@ -55,7 +55,7 @@ public class UserDbService : IUserDbService
         {
             throw new DatabaseException($"User with Id {identity.Id} not found in DB");
         }
-        return new CustomerEntity(model.Id, model.Name, model.Surname);
+        return new CustomerEntity(model.Id, model.Name, model.Surname, model.Role);
     }
 
     public async Task SaveUserDataAsync(User user, CancellationToken cancellationToken)
@@ -89,6 +89,6 @@ public class UserDbService : IUserDbService
         {
             throw new DatabaseException($"User with Id {identity.Id} not found in DB");
         }
-        return new CustomerEntity(model.Id, model.Name, model.Surname);
+        return new CustomerEntity(model.Id, model.Name, model.Surname, model.Role);
     }
 }

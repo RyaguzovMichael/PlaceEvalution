@@ -21,18 +21,21 @@ public class PlaceController : Controller
     private readonly ReviewFactory _reviewFactory;
     private readonly IFileDbService _fileDbService;
     private readonly IPalceDbService _placeDbService;
+    private readonly UserFactory _userFactory;
 
     public PlaceController(IMapper mapper,
                            PlaceService placeService,
                            IFileDbService fileDbService,
                            IPalceDbService palceDbService,
-                           ReviewFactory reviewFactory)
+                           ReviewFactory reviewFactory,
+                           UserFactory userFactory)
     {
         _mapper = mapper;
         _placeService = placeService;
         _fileDbService = fileDbService;
         _placeDbService = palceDbService;
         _reviewFactory = reviewFactory;
+        _userFactory = userFactory;
     }
 
     [HttpPost]
@@ -58,10 +61,16 @@ public class PlaceController : Controller
         Summary = "Получение данных о заведении",
         Description = "Для получения необходимо передать id заведения")
     ]
-    public async Task<ActionResult<DefaultResponse<PlaceVm>>> Get([FromBody] int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<DefaultResponse<PlaceVm>>> Get([FromQuery] int id, CancellationToken cancellationToken)
     {
         Place place = await _placeService.GetPlaceByIdAsync(id, cancellationToken);
-        return Ok(_mapper.Map<PlaceVm>(place));
+        PlaceVm placeVm = _mapper.Map<PlaceVm>(place);
+        foreach (var item in placeVm.Reviews)
+        {
+            var customer = await _userFactory.GetCustomerAsync(place.Reviews.First(r => r.Id == item.Id).User, cancellationToken)!;
+            item.Customer = _mapper.Map<CustomerVm>(customer);
+        }
+        return Ok(new DefaultResponse<PlaceVm>(placeVm));
     }
 
     [HttpGet]

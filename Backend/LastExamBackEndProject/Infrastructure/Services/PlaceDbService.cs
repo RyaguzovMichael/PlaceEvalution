@@ -86,20 +86,21 @@ public class PlaceDbService : IPalceDbService
     private static PlaceEntity CreatePlaceEntity(PlaceDbModel place)
     {
         return new PlaceEntity(place.Id,
-                                        place.Title,
-                                        place.Description,
-                                        place.TitlePhotoLink,
-                                        place.Photos ?? new List<string>(),
-                                        GetReviewEntitiesList(place.Reviews ?? new List<ReviewDbModel>()).Select(e => (Review)e).ToList());
+                               place.Title,
+                               place.Rate,
+                               place.Description,
+                               place.TitlePhotoLink,
+                               place.Photos ?? new List<string>(),
+                               GetReviewEntitiesList(place.Reviews ?? new List<ReviewDbModel>()).Select(e => (Review)e).ToList());
     }
 
     private static List<ReviewEntity> GetReviewEntitiesList(ICollection<ReviewDbModel> reviews)
     {
         List<ReviewEntity> reviewsEntities = new();
-        foreach (var review in reviewsEntities)
+        foreach (var review in reviews)
         {
             reviewsEntities.Add(
-                new ReviewEntity(review.Id, review.Rate, review.ReviewText, review.User, review.ReviewDate)
+                new ReviewEntity(review.Id, review.Rate, review.ReviewText, new UserIdentity(review.UserId, review.User.Role), review.ReviewDate)
             );
         }
 
@@ -109,15 +110,17 @@ public class PlaceDbService : IPalceDbService
     private static List<ReviewDbModel> GetReviewDbModelList(ICollection<Review> reviews)
     {
         List<ReviewDbModel> reviewsEntities = new();
-        foreach (var review in reviewsEntities)
+        foreach (var review in reviews)
         {
             reviewsEntities.Add(new ReviewDbModel()
             {
                 Id = review.Id,
                 Rate = review.Rate,
                 ReviewText = review.ReviewText,
-                User = review.User,
-                ReviewDate = review.ReviewDate
+                UserId = review.User.Id,
+                ReviewDate = review.ReviewDate,
+                CreatedDate = DateTime.Now,
+                LastModifiedDate = DateTime.Now,
             });
         }
 

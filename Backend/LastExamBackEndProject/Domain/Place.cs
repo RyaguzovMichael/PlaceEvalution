@@ -21,11 +21,12 @@ public class Place : PlaceIdentity
         Reviews = null;
     }
 
-    protected Place(int id, string title, string description, string photoLink, List<string> photos, List<Review> reviews)
+    protected Place(int id, string title, float rate, string description, string photoLink, List<string> photos, List<Review> reviews)
         : this(id, title, description, photoLink)
     {
         Photos = photos;
         Reviews = reviews;
+        Rate = rate;
     }
 
     public static Place Create(PlaceIdentity identity, string title, string description, string photoLink)

@@ -13,11 +13,11 @@ public class ReviewFactory
     }
 
     public async Task<Review> CreateReviewAsync
-        (int rate, string reviewText, UserIdentity userIdentity, CancellationToken cancellationToken)
+        (int rate, string reviewText,PlaceIdentity placeIdentity, UserIdentity userIdentity, CancellationToken cancellationToken)
     {
         reviewText.VerifyStringLength(300, 3);
 
-        ReviewIdentity identity = await _reviewDbService.GetNewReviewIdentityAsync(cancellationToken);
+        ReviewIdentity identity = await _reviewDbService.GetNewReviewIdentityAsync(placeIdentity, userIdentity, cancellationToken);
 
         return Review.Create(identity, rate, reviewText, userIdentity);
     }

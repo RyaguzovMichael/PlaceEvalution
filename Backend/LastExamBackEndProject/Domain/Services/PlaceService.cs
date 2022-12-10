@@ -8,14 +8,17 @@ public class PlaceService
     private readonly PlaceFactory _placeFactory;
     private readonly ReviewFactory _reviewFactory;
     private readonly IPalceDbService _placeDbService;
+    private readonly IReviewDbService _reviewDbService;
 
     public PlaceService(PlaceFactory placeFactory,
                         ReviewFactory reviewFactory,
-                        IPalceDbService placeDbService)
+                        IPalceDbService placeDbService,
+                        IReviewDbService reviewDbService)
     {
         _placeFactory = placeFactory;
         _reviewFactory = reviewFactory;
         _placeDbService = placeDbService;
+        _reviewDbService = reviewDbService;
     }
 
     public async Task<Place> CreatePlaceAsync(string title, string description, string photoLink, CancellationToken cancellationToken)
@@ -37,7 +40,7 @@ public class PlaceService
         (int rate, string reviewText, UserIdentity userIdentity, PlaceIdentity placeIdentity, CancellationToken cancellationToken)
     {
         Place place = await _placeFactory.GetPlaceAsync(placeIdentity, cancellationToken);
-        Review review = await _reviewFactory.CreateReviewAsync(rate, reviewText, userIdentity, cancellationToken);
+        Review review = await _reviewFactory.CreateReviewAsync(rate, reviewText, placeIdentity, userIdentity, cancellationToken);
         place.AddReview(review);
         return place;
     }
@@ -48,6 +51,7 @@ public class PlaceService
         Place place = await _placeFactory.GetPlaceAsync(placeIdentity, cancellationToken);
         Review review = await _reviewFactory.GetReviewAsync(reviewIdentity, cancellationToken);
         place.DeleteReview(review, userIdentity);
+        await _reviewDbService.DeleteReviewAsync(review, cancellationToken);
         return place;
     }
 

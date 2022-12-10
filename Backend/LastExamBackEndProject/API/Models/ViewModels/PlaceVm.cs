@@ -3,10 +3,10 @@
 public class PlaceVm
 {
     public int Id { get; set; }
-    public string Title { get; private set; }
-    public string Description { get; private set; }
-    public string TitlePhotoLink { get; private set; }
-    public float Rate { get; private set; }
-    public List<string>? Photos { get; private set; }
-    public List<ReviewVm>? Reviews { get; private set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public string TitlePhotoLink { get; set; }
+    public float Rate { get; set; }
+    public List<string>? Photos { get; set; }
+    public List<ReviewVm>? Reviews { get; set; }
 }

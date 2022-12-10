@@ -50,7 +50,7 @@ public class PlaceRepository : BaseRepository<PlaceDbModel, ExamDbContext>
                             Rate = inner.Rate,
                             ReviewDate = inner.ReviewDate
                         })
-                        .Where(r => r.Id == model.Id)
+                        .Where(r => r.PlaceId == model.Id)
                         .ToListAsync(cancellationToken);
     }
 }

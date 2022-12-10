@@ -12,6 +12,8 @@ public static class DataBaseConfigurator
             options.UseNpgsql(configuration.GetConnectionString("DbConnectionString")));
 
         services.AddTransient<UserRepository>();
+        services.AddTransient<PlaceRepository>();
+        services.AddTransient<ReviewRepository>();
         return services;
     }
 }

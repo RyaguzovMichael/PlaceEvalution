@@ -8,6 +8,7 @@ var services = builder.Services;
 services.AddAutomapper();
 services.AddUserServices();
 services.AddDatabase(builder.Configuration);
+services.AddPlaceServices();
 
 // Configure API
 services.AddCorsPolicy();

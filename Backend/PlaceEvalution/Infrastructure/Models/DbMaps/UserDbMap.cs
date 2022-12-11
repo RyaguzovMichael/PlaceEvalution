@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PlaceEvolution.API.Infrastructure.Models.DbModels;
+using PlaceEvalution.API.Infrastructure.Models.DbModels;
 
-namespace PlaceEvolution.API.Infrastructure.Models.DbMaps;
+namespace PlaceEvalution.API.Infrastructure.Models.DbMaps;
 
 public class UserDbMap : IEntityTypeConfiguration<UserDbModel>
 {

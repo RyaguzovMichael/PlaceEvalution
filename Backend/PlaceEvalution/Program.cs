@@ -1,5 +1,5 @@
-using PlaceEvolution.API.API.DependencyInjection;
-using PlaceEvolution.API.API.Pipeline;
+using PlaceEvalution.API.API.DependencyInjection;
+using PlaceEvalution.API.API.Pipeline;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;

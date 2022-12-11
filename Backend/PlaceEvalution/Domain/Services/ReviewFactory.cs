@@ -1,7 +1,7 @@
-﻿using PlaceEvolution.API.Common.Extensions;
-using PlaceEvolution.API.Domain.Contracts;
+﻿using PlaceEvalution.API.Common.Extensions;
+using PlaceEvalution.API.Domain.Contracts;
 
-namespace PlaceEvolution.API.Domain.Services;
+namespace PlaceEvalution.API.Domain.Services;
 
 public class ReviewFactory
 {

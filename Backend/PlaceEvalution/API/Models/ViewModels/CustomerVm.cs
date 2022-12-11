@@ -1,4 +1,4 @@
-﻿namespace PlaceEvolution.API.API.Models.ViewModels;
+﻿namespace PlaceEvalution.API.API.Models.ViewModels;
 
 public class CustomerVm
 {

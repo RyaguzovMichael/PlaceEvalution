@@ -1,6 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 
-namespace PlaceEvolution.API.API.DependencyInjection;
+namespace PlaceEvalution.API.API.DependencyInjection;
 
 public static class SwaggerConfigurator
 {
@@ -9,7 +9,7 @@ public static class SwaggerConfigurator
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "PlaceEvolution", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "PlaceEvalution", Version = "v1" });
         });
         return services;
     }

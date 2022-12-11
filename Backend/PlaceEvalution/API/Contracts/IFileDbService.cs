@@ -1,4 +1,4 @@
-﻿namespace PlaceEvolution.API.API.Contracts;
+﻿namespace PlaceEvalution.API.API.Contracts;
 
 public interface IFileDbService
 {

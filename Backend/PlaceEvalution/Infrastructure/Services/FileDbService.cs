@@ -1,7 +1,7 @@
-﻿using PlaceEvolution.API.API.Contracts;
-using PlaceEvolution.API.Common.Exceptions;
+﻿using PlaceEvalution.API.API.Contracts;
+using PlaceEvalution.API.Common.Exceptions;
 
-namespace PlaceEvolution.API.Infrastructure.Services;
+namespace PlaceEvalution.API.Infrastructure.Services;
 
 public class FileDbService : IFileDbService
 {

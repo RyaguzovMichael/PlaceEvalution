@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PlaceEvolution.API.API.Models;
-using PlaceEvolution.API.API.Models.Commands;
-using PlaceEvolution.API.API.Models.ViewModels;
-using PlaceEvolution.API.Common.Exceptions;
-using PlaceEvolution.API.Common.Extensions;
-using PlaceEvolution.API.Domain;
-using PlaceEvolution.API.Domain.Services;
+using PlaceEvalution.API.API.Models;
+using PlaceEvalution.API.API.Models.Commands;
+using PlaceEvalution.API.API.Models.ViewModels;
+using PlaceEvalution.API.Common.Extensions;
+using PlaceEvalution.API.Domain;
+using PlaceEvalution.API.Domain.Services;
+using PlaceEvalution.API.Common.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace PlaceEvolution.API.API.Controllers;
+namespace PlaceEvalution.API.API.Controllers;
 
 [Route("api/[controller]/[action]")]
 public class UserController : Controller

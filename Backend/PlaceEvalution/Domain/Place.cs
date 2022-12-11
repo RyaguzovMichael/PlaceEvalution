@@ -1,6 +1,6 @@
-﻿using PlaceEvolution.API.Common.Exceptions;
+﻿using PlaceEvalution.API.Common.Exceptions;
 
-namespace PlaceEvolution.API.Domain;
+namespace PlaceEvalution.API.Domain;
 
 public class Place : PlaceIdentity
 {

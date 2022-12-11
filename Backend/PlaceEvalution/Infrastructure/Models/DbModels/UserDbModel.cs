@@ -1,7 +1,7 @@
 ﻿using BaseRepository.Models;
-using PlaceEvolution.API.Domain;
+using PlaceEvalution.API.Domain;
 
-namespace PlaceEvolution.API.Infrastructure.Models.DbModels;
+namespace PlaceEvalution.API.Infrastructure.Models.DbModels;
 
 public class UserDbModel : BaseRepositoryEntity
 {

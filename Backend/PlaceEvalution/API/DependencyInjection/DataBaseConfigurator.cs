@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PlaceEvolution.API.Infrastructure.Abstractions;
-using PlaceEvolution.API.Infrastructure.Models;
-using PlaceEvolution.API.Infrastructure.Services;
+using PlaceEvalution.API.Infrastructure.Abstractions;
+using PlaceEvalution.API.Infrastructure.Models;
+using PlaceEvalution.API.Infrastructure.Services;
 
-namespace PlaceEvolution.API.API.DependencyInjection;
+namespace PlaceEvalution.API.API.DependencyInjection;
 
 public static class DataBaseConfigurator
 {

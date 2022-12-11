@@ -1,8 +1,8 @@
 ﻿using BaseRepository.Abstractions;
-using PlaceEvolution.API.Domain;
-using PlaceEvolution.API.Infrastructure.Models.DbModels;
+using PlaceEvalution.API.Domain;
+using PlaceEvalution.API.Infrastructure.Models.DbModels;
 
-namespace PlaceEvolution.API.Infrastructure.Abstractions;
+namespace PlaceEvalution.API.Infrastructure.Abstractions;
 
 public interface IUserRepository : IBaseRepository<UserDbModel>
 {

@@ -1,7 +1,7 @@
-﻿using PlaceEvolution.API.Common.Exceptions;
-using PlaceEvolution.API.Common.Extensions;
+﻿using PlaceEvalution.API.Common.Extensions;
+using PlaceEvalution.API.Common.Exceptions;
 
-namespace PlaceEvolution.API.Domain;
+namespace PlaceEvalution.API.Domain;
 
 public class User : UserIdentity
 {

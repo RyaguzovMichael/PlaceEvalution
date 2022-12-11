@@ -1,6 +1,6 @@
 ﻿using BaseRepository.Models;
 
-namespace PlaceEvolution.API.Infrastructure.Models.DbModels;
+namespace PlaceEvalution.API.Infrastructure.Models.DbModels;
 
 public class PlaceDbModel : BaseRepositoryEntity
 {

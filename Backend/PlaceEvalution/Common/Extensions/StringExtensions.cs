@@ -1,6 +1,6 @@
-﻿using PlaceEvolution.API.Common.Exceptions;
+﻿using PlaceEvalution.API.Common.Exceptions;
 
-namespace PlaceEvolution.API.Common.Extensions;
+namespace PlaceEvalution.API.Common.Extensions;
 
 public static class StringExtensions
 {

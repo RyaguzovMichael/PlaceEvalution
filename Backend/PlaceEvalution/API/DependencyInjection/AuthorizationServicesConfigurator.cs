@@ -1,8 +1,8 @@
-﻿using PlaceEvolution.API.Domain.Contracts;
-using PlaceEvolution.API.Domain.Services;
-using PlaceEvolution.API.Infrastructure.Services;
+﻿using PlaceEvalution.API.Domain.Contracts;
+using PlaceEvalution.API.Domain.Services;
+using PlaceEvalution.API.Infrastructure.Services;
 
-namespace PlaceEvolution.API.API.DependencyInjection;
+namespace PlaceEvalution.API.API.DependencyInjection;
 
 public static class AuthorizationServicesConfigurator
 {

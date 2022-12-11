@@ -1,4 +1,4 @@
-﻿namespace PlaceEvolution.API.Domain;
+﻿namespace PlaceEvalution.API.Domain;
 
 public abstract class ReviewIdentity
 {

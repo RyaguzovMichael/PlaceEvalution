@@ -1,4 +1,4 @@
-﻿namespace PlaceEvolution.API.API.Pipeline;
+﻿namespace PlaceEvalution.API.API.Pipeline;
 
 public static class SwaggerConfigurator
 {

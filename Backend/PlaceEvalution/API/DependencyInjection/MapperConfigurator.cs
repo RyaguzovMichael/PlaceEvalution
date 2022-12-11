@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using PlaceEvolution.API.API.Models.ViewModels;
-using PlaceEvolution.API.Domain;
-using PlaceEvolution.API.Domain.Services;
-using PlaceEvolution.API.Infrastructure.Models.DbModels;
+using PlaceEvalution.API.API.Models.ViewModels;
+using PlaceEvalution.API.Domain;
+using PlaceEvalution.API.Domain.Services;
+using PlaceEvalution.API.Infrastructure.Models.DbModels;
 
-namespace PlaceEvolution.API.API.DependencyInjection;
+namespace PlaceEvalution.API.API.DependencyInjection;
 
 public static class MapperConfigurator
 {

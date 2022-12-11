@@ -1,4 +1,4 @@
-﻿namespace PlaceEvolution.API.API.Models.Commands;
+﻿namespace PlaceEvalution.API.API.Models.Commands;
 
 public class RemovePhotoCommand
 {

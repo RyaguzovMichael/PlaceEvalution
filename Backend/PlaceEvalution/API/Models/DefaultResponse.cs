@@ -1,6 +1,6 @@
-﻿using PlaceEvolution.API.Common.Exceptions;
+﻿using PlaceEvalution.API.Common.Exceptions;
 
-namespace PlaceEvolution.API.API.Models;
+namespace PlaceEvalution.API.API.Models;
 
 public class DefaultResponse<TData>
 {

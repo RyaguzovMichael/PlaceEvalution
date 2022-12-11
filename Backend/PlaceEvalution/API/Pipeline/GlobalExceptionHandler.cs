@@ -1,9 +1,9 @@
-﻿using PlaceEvolution.API.API.Models;
-using PlaceEvolution.API.Common.Exceptions;
+﻿using PlaceEvalution.API.API.Models;
+using PlaceEvalution.API.Common.Exceptions;
 using System.Net;
 using System.Text;
 
-namespace PlaceEvolution.API.API.Pipeline;
+namespace PlaceEvalution.API.API.Pipeline;
 
 internal class GlobalExceptionHandler
 {

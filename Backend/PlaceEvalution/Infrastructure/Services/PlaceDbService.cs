@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using BaseRepository;
 using Microsoft.EntityFrameworkCore;
-using PlaceEvolution.API.Common.Exceptions;
-using PlaceEvolution.API.Domain;
-using PlaceEvolution.API.Domain.Contracts;
-using PlaceEvolution.API.Infrastructure.Abstractions;
-using PlaceEvolution.API.Infrastructure.Models;
-using PlaceEvolution.API.Infrastructure.Models.DbModels;
+using PlaceEvalution.API.Domain;
+using PlaceEvalution.API.Domain.Contracts;
+using PlaceEvalution.API.Infrastructure.Abstractions;
+using PlaceEvalution.API.Infrastructure.Models;
+using PlaceEvalution.API.Infrastructure.Models.DbModels;
+using PlaceEvalution.API.Common.Exceptions;
 
-namespace PlaceEvolution.API.Infrastructure.Services;
+namespace PlaceEvalution.API.Infrastructure.Services;
 
 public class PlaceDbService : BaseRepository<PlaceDbModel, DataBaseContext>, IPlaceRepository, IPalceDbService
 {

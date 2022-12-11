@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PlaceEvolution.API.Common.Extensions;
-using PlaceEvolution.API.Infrastructure.Models.DbMaps;
-using PlaceEvolution.API.Infrastructure.Models.DbModels;
+using PlaceEvalution.API.Common.Extensions;
+using PlaceEvalution.API.Infrastructure.Models.DbModels;
+using PlaceEvalution.API.Infrastructure.Models.DbMaps;
 
-namespace PlaceEvolution.API.Infrastructure.Models;
+namespace PlaceEvalution.API.Infrastructure.Models;
 
 public class DataBaseContext : DbContext
 {

@@ -1,4 +1,4 @@
-﻿namespace PlaceEvolution.API.API.DependencyInjection;
+﻿namespace PlaceEvalution.API.API.DependencyInjection;
 
 public static class CorsPolicyConfigurator
 {

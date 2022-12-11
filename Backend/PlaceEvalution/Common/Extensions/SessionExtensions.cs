@@ -1,7 +1,7 @@
-﻿using PlaceEvolution.API.API.Models;
+﻿using PlaceEvalution.API.API.Models;
 using System.Text.Json;
 
-namespace PlaceEvolution.API.Common.Extensions;
+namespace PlaceEvalution.API.Common.Extensions;
 
 public static class SessionExtensions
 {

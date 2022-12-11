@@ -6,17 +6,17 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["Backend/PlaceEvalution/PlaceEvolution.API.csproj", "Backend/PlaceEvalution/"]
+COPY ["Backend/PlaceEvalution/PlaceEvalution.API.csproj", "Backend/PlaceEvalution/"]
 COPY ["Common/BaseRepository/BaseRepository.csproj", "Common/BaseRepository/"]
-RUN dotnet restore "Backend/PlaceEvalution/PlaceEvolution.API.csproj"
+RUN dotnet restore "Backend/PlaceEvalution/PlaceEvalution.API.csproj"
 COPY . .
 WORKDIR "/src/Backend/PlaceEvalution"
-RUN dotnet build "PlaceEvolution.API.csproj" -c Release -o /app/build
+RUN dotnet build "PlaceEvalution.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "PlaceEvolution.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "PlaceEvalution.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "PlaceEvolution.API.dll"]
+ENTRYPOINT ["dotnet", "PlaceEvalution.API.dll"]

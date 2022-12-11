@@ -1,4 +1,4 @@
-﻿namespace PlaceEvolution.API.Common.Exceptions;
+﻿namespace PlaceEvalution.API.Common.Exceptions;
 
 public class BaseBusinessException : ApplicationException
 {

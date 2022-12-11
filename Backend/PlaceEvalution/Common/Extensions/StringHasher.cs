@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace PlaceEvolution.API.Common.Extensions;
+namespace PlaceEvalution.API.Common.Extensions;
 
 public static class StringHasher
 {

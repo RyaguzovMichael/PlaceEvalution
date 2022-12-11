@@ -1,7 +1,7 @@
-﻿using PlaceEvolution.API.Common.Exceptions;
-using PlaceEvolution.API.Domain.Contracts;
+﻿using PlaceEvalution.API.Domain.Contracts;
+using PlaceEvalution.API.Common.Exceptions;
 
-namespace PlaceEvolution.API.Domain.Services;
+namespace PlaceEvalution.API.Domain.Services;
 
 public class UserService
 {

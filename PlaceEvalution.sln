@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaceEvolution.API", "Backend\PlaceEvalution\PlaceEvolution.API.csproj", "{F536BC82-1AA1-45A8-92D3-8CD5F1A4B133}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaceEvalution.API", "Backend\PlaceEvalution\PlaceEvalution.API.csproj", "{F536BC82-1AA1-45A8-92D3-8CD5F1A4B133}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0D124D19-5A4D-4196-86CB-11CCB187A5F2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{F6D38788-EBAC-4242-A8A3-29AA9EEF3FE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseRepository", "Common\BaseRepository\BaseRepository.csproj", "{B703211B-8619-4FCC-8BE5-6D2FD1D17D82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseRepository", "Common\BaseRepository\BaseRepository.csproj", "{B703211B-8619-4FCC-8BE5-6D2FD1D17D82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

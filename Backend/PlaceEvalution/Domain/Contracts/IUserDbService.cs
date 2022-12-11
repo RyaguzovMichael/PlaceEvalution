@@ -1,4 +1,4 @@
-﻿namespace PlaceEvolution.API.Domain.Contracts;
+﻿namespace PlaceEvalution.API.Domain.Contracts;
 
 public interface IUserDbService
 {

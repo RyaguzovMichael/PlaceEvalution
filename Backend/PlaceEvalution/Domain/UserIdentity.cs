@@ -1,4 +1,4 @@
-﻿namespace PlaceEvolution.API.Domain;
+﻿namespace PlaceEvalution.API.Domain;
 
 public class UserIdentity
 {

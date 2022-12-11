@@ -1,6 +1,6 @@
-﻿using PlaceEvolution.API.Domain;
+﻿using PlaceEvalution.API.Domain;
 
-namespace PlaceEvolution.API.API.Models;
+namespace PlaceEvalution.API.API.Models;
 
 public class SessionData
 {

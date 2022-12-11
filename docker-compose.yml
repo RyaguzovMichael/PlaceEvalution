@@ -1,29 +1,29 @@
 version: '3.4'
 
 services:
-    examdb:
+    place-evalution-db:
         image: postgres
-        container_name: examdb
+        container_name: place-evalution-db
         environment:
           - POSTGRES_USER=postgres
           - POSTGRES_PASSWORD=12345
-          - POSTGRES_DB=ExamDb
+          - POSTGRES_DB=PlaceEvalutionDb
         restart: always
         ports:
           - ":5432"
         volumes:
           - postgres_data:/var/lib/postgressql/coursesData
 
-    lastexambackendproject:
-        image: ${DOCKER_REGISTRY-}lastexambackendproject
+    place-evolution-api:
+        image: ${DOCKER_REGISTRY-}place-evolution-api
         build:
             context: .
-            dockerfile: Backend/LastExamBackEndProject/Dockerfile
+            dockerfile: Backend/PlaceEvalution/Dockerfile
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
-            - "ConnectionStrings:DbConnectionString=Server=examdb;Port=5432;UserId=postgres;Password=12345;"
+            - "ConnectionStrings:DbConnectionString=Server=place-evalution-db;Port=5432;UserId=postgres;Password=12345;"
         depends_on:
-            - examdb
+            - place-evalution-db
         ports:
             - "5555:80"
         volumes:

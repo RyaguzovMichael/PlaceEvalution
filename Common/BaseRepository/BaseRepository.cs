@@ -1,7 +1,7 @@
-﻿using System.Linq.Expressions;
-using BaseRepository.Abstractions;
+﻿using BaseRepository.Abstractions;
 using BaseRepository.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace BaseRepository;
 

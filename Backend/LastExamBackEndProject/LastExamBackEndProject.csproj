@@ -26,7 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="wwwroot\" />
+      <ProjectReference Include="..\..\Common\BaseRepository\BaseRepository.csproj" />
     </ItemGroup>
 
 </Project>

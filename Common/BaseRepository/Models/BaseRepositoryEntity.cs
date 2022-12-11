@@ -1,4 +1,4 @@
-﻿namespace LastExamBackEndProject.Infrastructure.Models;
+﻿namespace BaseRepository.Models;
 
 public class BaseRepositoryEntity
 {

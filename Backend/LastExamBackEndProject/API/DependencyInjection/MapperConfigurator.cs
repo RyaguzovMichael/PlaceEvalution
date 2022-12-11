@@ -2,6 +2,7 @@
 using LastExamBackEndProject.API.Models.ViewModels;
 using LastExamBackEndProject.Domain;
 using LastExamBackEndProject.Domain.Services;
+using LastExamBackEndProject.Infrastructure.Models.DbModels;
 
 namespace LastExamBackEndProject.API.DependencyInjection;
 
@@ -11,7 +12,11 @@ public static class MapperConfigurator
     {
         UserFactory userFactory = services.BuildServiceProvider().GetService<UserFactory>()!;
         services.AddSingleton(provider =>
-            new MapperConfiguration(cfg => { cfg.AddProfile(new AutomapperProfile(userFactory)); }).CreateMapper());
+            new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new AutomapperProfile(userFactory));
+                cfg.AddProfile(new DbModelsMappingProfile());
+            }).CreateMapper());
         return services;
     }
 
@@ -23,10 +28,20 @@ public static class MapperConfigurator
             CreateMap<Place, PlaceVm>();
             CreateMap<Review, ReviewVm>()
                 .ForMember(r => r.ReviewDate, o => o.MapFrom(p => p.ReviewDate.ToLongDateString()))
-                .ForMember(r => r.Customer, o => o.MapFrom( p => userFactory.GetCustomer(p.User)));
+                .ForMember(r => r.Customer, o => o.MapFrom(p => userFactory.GetCustomer(p.User)));
             CreateMap<Place, PlaceShortVm>()
                 .ForMember(r => r.PhotosCount, o => o.MapFrom(p => p.Photos == null ? 0 : p.Photos.Count))
                 .ForMember(r => r.ReviewsCount, o => o.MapFrom(p => p.Reviews == null ? 0 : p.Reviews.Count));
+        }
+    }
+
+    private class DbModelsMappingProfile : Profile
+    {
+        public DbModelsMappingProfile()
+        {
+            CreateMap<Review, ReviewDbModel>()
+                .ForMember(r => r.CreatedDate, o => o.MapFrom(_ => DateTime.Now))
+                .ForMember(r => r.LastModifiedDate, o => o.MapFrom(_ => DateTime.Now));
         }
     }
 }

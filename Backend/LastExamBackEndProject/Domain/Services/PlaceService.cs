@@ -21,61 +21,61 @@ public class PlaceService
         _reviewDbService = reviewDbService;
     }
 
-    public async Task<Place> CreatePlaceAsync(string title, string description, string photoLink, CancellationToken cancellationToken)
+    public async Task<Place> CreatePlaceAsync(string title, string description, string photoLink, CancellationToken token)
     {
-        return await _placeFactory.CreatePlaceAsync(title, description, photoLink, cancellationToken); 
+        return await _placeFactory.CreatePlaceAsync(title, description, photoLink, token); 
     }
 
-    public async Task<Place> GetPlaceByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<Place> GetPlaceByIdAsync(int id, CancellationToken token)
     {
-        return await _placeDbService.GetPlaceByIdAsync(id, cancellationToken);
+        return await _placeDbService.GetPlaceByIdAsync(id, token);
     }
 
-    public async Task<Place> GetPlaceByIdentityAsync(PlaceIdentity identity, CancellationToken cancellationToken)
+    public async Task<Place> GetPlaceByIdentityAsync(PlaceIdentity identity, CancellationToken token)
     {
-        return await _placeDbService.GetPlaceByIdentityAsync(identity, cancellationToken);
+        return await _placeDbService.GetPlaceByIdentityAsync(identity, token);
     }
 
     public async Task<Place> AddRewiewToPlaceAsync
-        (int rate, string reviewText, UserIdentity userIdentity, PlaceIdentity placeIdentity, CancellationToken cancellationToken)
+        (int rate, string reviewText, UserIdentity userIdentity, PlaceIdentity placeIdentity, CancellationToken token)
     {
-        Place place = await _placeFactory.GetPlaceAsync(placeIdentity, cancellationToken);
-        Review review = await _reviewFactory.CreateReviewAsync(rate, reviewText, placeIdentity, userIdentity, cancellationToken);
+        Place place = await _placeFactory.GetPlaceAsync(placeIdentity, token);
+        Review review = await _reviewFactory.CreateReviewAsync(rate, reviewText, placeIdentity, userIdentity, token);
         place.AddReview(review);
         return place;
     }
 
     public async Task<Place> RemoveReviewFromPlaceAsync
-        (ReviewIdentity reviewIdentity, PlaceIdentity placeIdentity, UserIdentity userIdentity, CancellationToken cancellationToken)
+        (ReviewIdentity reviewIdentity, PlaceIdentity placeIdentity, UserIdentity userIdentity, CancellationToken token)
     {
-        Place place = await _placeFactory.GetPlaceAsync(placeIdentity, cancellationToken);
-        Review review = await _reviewFactory.GetReviewAsync(reviewIdentity, cancellationToken);
+        Place place = await _placeFactory.GetPlaceAsync(placeIdentity, token);
+        Review review = await _reviewFactory.GetReviewAsync(reviewIdentity, token);
         place.DeleteReview(review, userIdentity);
-        await _reviewDbService.DeleteReviewAsync(review, cancellationToken);
+        await _reviewDbService.DeleteReviewAsync(review, token);
         return place;
     }
 
     public async Task<Place> AddPhotoToPlaceAsync
-        (string photoLink, PlaceIdentity placeIdentity, CancellationToken cancellationToken)
+        (string photoLink, PlaceIdentity placeIdentity, CancellationToken token)
     {
-        Place place = await _placeFactory.GetPlaceAsync(placeIdentity, cancellationToken);
+        Place place = await _placeFactory.GetPlaceAsync(placeIdentity, token);
         place.AddPhoto(photoLink);
         return place;
     }
 
     public async Task<Place> RemovePhotoFromPlaceAsync
-        (string photoLink, PlaceIdentity placeIdentity, UserIdentity userIdentity, CancellationToken cancellationToken)
+        (string photoLink, PlaceIdentity placeIdentity, UserIdentity userIdentity, CancellationToken token)
     {
-        Place place = await _placeFactory.GetPlaceAsync(placeIdentity, cancellationToken);
+        Place place = await _placeFactory.GetPlaceAsync(placeIdentity, token);
         place.DeletePhoto(photoLink, userIdentity);
         return place;
     }
 
-    public async Task DeletePlaceAsync(PlaceIdentity placeIdentity, UserIdentity userIdentity, CancellationToken cancellationToken)
+    public async Task DeletePlaceAsync(PlaceIdentity placeIdentity, UserIdentity userIdentity, CancellationToken token)
     {
         if (userIdentity.Role == UserRoles.Admin)
         {
-            await _placeDbService.DeletePlace(placeIdentity, cancellationToken);
+            await _placeDbService.DeletePlace(placeIdentity, token);
         }
         else
         {

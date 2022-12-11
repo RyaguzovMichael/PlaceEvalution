@@ -1,94 +1,116 @@
-﻿using LastExamBackEndProject.Common.Exceptions;
+﻿using BaseRepository;
+using LastExamBackEndProject.Common.Exceptions;
 using LastExamBackEndProject.Domain;
 using LastExamBackEndProject.Domain.Contracts;
+using LastExamBackEndProject.Infrastructure.Abstractions;
 using LastExamBackEndProject.Infrastructure.Models;
-using LastExamBackEndProject.Infrastructure.Models.DomainEntities;
-using LastExamBackEndProject.Infrastructure.Repositories;
-using System.Threading;
+using LastExamBackEndProject.Infrastructure.Models.DbModels;
 
 namespace LastExamBackEndProject.Infrastructure.Services;
 
-public class UserDbService : IUserDbService
+public class UserDbService : BaseRepository<UserDbModel, DataBaseContext>, IUserRepository, IUserDbService
 {
-    private readonly UserRepository _userRepository;
+    public UserDbService(DataBaseContext dbContext) : base(dbContext) { }
 
-    public UserDbService(UserRepository userRepository)
+    public async Task<bool> IsLoginUniqueAsync(string login, CancellationToken token)
     {
-        _userRepository = userRepository;
+        return await GetFirstOrDefaultAsync(u => u.Login == login, token) is null;
     }
 
-    public async Task<bool> IsLoginUniqueAsync(string login, CancellationToken cancellationToken)
+    public async Task<UserIdentity> GetNewUserIdentityAsync(CancellationToken token)
     {
-        return await _userRepository.GetFirstOrDefaultAsync(u => u.Login == login, cancellationToken) is null;
+        UserDbModel model = await AddAsync(new UserDbModel(), token);
+        return ConvertDbModelToUser(model);
     }
 
-    public async Task<UserIdentity> GetNewUserIdentityAsync(CancellationToken cancellationToken)
+    public async Task<User> GetUserByLoginAsync(string login, CancellationToken token)
     {
-        UserDbModel model = await _userRepository.AddAsync(new UserDbModel(), cancellationToken);
-        return new UserIdentity(model.Id, model.Role);
-    }
-
-    public async Task<User> GetUserByLoginAsync(string login, CancellationToken cancellationToken)
-    {
-        UserDbModel? model = await _userRepository.GetFirstOrDefaultAsync(u => u.Login == login, cancellationToken);
+        UserDbModel? model = await GetFirstOrDefaultAsync(u => u.Login == login, token);
         if (model is null)
         {
             throw new DatabaseException($"User with login {login} not found in DB");
         }
-        return new UserEntity(model.Id, model.Login, model.Password, model.Role);
+        return ConvertDbModelToUser(model);
     }
 
-    public async Task<User> GetUserByIdentityAsync(UserIdentity identity, CancellationToken cancellationToken)
+    public async Task<User> GetUserByIdentityAsync(UserIdentity identity, CancellationToken token)
     {
-        UserDbModel? model = await _userRepository.GetFirstOrDefaultAsync(u => u.Id == identity.Id, cancellationToken);
+        UserDbModel? model = await GetFirstOrDefaultAsync(u => u.Id == identity.Id, token);
         if (model is null)
         {
             throw new DatabaseException($"User with Id {identity.Id} not found in DB");
         }
-        return new UserEntity(model.Id, model.Login, model.Password, model.Role);
+        return ConvertDbModelToUser(model);
     }
 
-    public async Task<Customer> GetCustomerByIdentityAsync(UserIdentity identity, CancellationToken cancellationToken)
+    public async Task<Customer> GetCustomerByIdentityAsync(UserIdentity identity, CancellationToken token)
     {
-        UserDbModel? model = await _userRepository.GetFirstOrDefaultAsync(u => u.Id == identity.Id, cancellationToken);
+        UserDbModel? model = await GetFirstOrDefaultAsync(u => u.Id == identity.Id, token);
         if (model is null)
         {
             throw new DatabaseException($"User with Id {identity.Id} not found in DB");
         }
-        return new CustomerEntity(model.Id, model.Name, model.Surname, model.Role);
+        return ConvertDbModelToCustomer(model);
     }
 
-    public async Task SaveUserDataAsync(User user, CancellationToken cancellationToken)
+    public async Task SaveUserDataAsync(User user, CancellationToken token)
     {
-        UserDbModel? model = await _userRepository.GetFirstOrDefaultAsync(u => u.Id == user.Id, cancellationToken);
+        UserDbModel? model = await GetFirstOrDefaultAsync(u => u.Id == user.Id, token);
         if (model is null)
         {
             throw new DatabaseException($"User with Id {user.Id} not found in DB");
         }
         model.Login = user.Login;
         model.Password = user.Password;
-        await _userRepository.UpdateAsync(model, cancellationToken);
+        await UpdateAsync(model, token);
     }
 
-    public async Task UpdateCustomerDataAsync(UserIdentity identity, string name, string surname, CancellationToken cancellationToken)
+    public async Task UpdateCustomerDataAsync(UserIdentity identity, string name, string surname, CancellationToken token)
     {
-        UserDbModel? model = await _userRepository.GetFirstOrDefaultAsync(u => u.Id == identity.Id, cancellationToken);
+        UserDbModel? model = await GetFirstOrDefaultAsync(u => u.Id == identity.Id, token);
         if (model is null)
         {
             throw new DatabaseException($"User with Id {identity.Id} not found in DB");
         }
         model.Name = name;
         model.Surname = surname;
-        await _userRepository.UpdateAsync(model, cancellationToken);
+        await UpdateAsync(model, token);
     }
 
     public Customer GetCustomerByIdentity(UserIdentity identity)
     {
-        UserDbModel? model = _userRepository.GetFirstOrDefaultAsync(u => u.Id == identity.Id, new CancellationToken()).Result;
+        UserDbModel? model = GetFirstOrDefaultAsync(u => u.Id == identity.Id, new CancellationToken()).Result;
         if (model is null)
         {
             throw new DatabaseException($"User with Id {identity.Id} not found in DB");
         }
+        return ConvertDbModelToCustomer(model);
+    }
+
+    protected override IQueryable<UserDbModel> FilterByString(IQueryable<UserDbModel> query, string? filterString)
+    {
+        return filterString is null ? query : query.Where(u => u.Login.Contains(filterString) 
+                                                            || u.Name.Contains(filterString) 
+                                                            || u.Surname.Contains(filterString));
+    }
+
+    public User ConvertDbModelToUser(UserDbModel model)
+    {
+        return new UserEntity(model.Id, model.Login, model.Password, model.Role);
+    }
+
+    public Customer ConvertDbModelToCustomer(UserDbModel model)
+    {
         return new CustomerEntity(model.Id, model.Name, model.Surname, model.Role);
+    }
+
+    private class CustomerEntity : Customer
+    {
+        public CustomerEntity(int id, string name, string surname, UserRoles role) : base(id, name, surname, role) { }
+    }
+
+    private class UserEntity : User
+    {
+        public UserEntity(int id, string login, string password, UserRoles role) : base(id, login, password, role) { }
     }
 }

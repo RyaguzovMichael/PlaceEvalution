@@ -2,6 +2,6 @@
 
 public interface IFileDbService
 {
-    Task DeleteFileAsync(string photoLink, CancellationToken cancellationToken);
-    Task<string> SaveFileAsync(IFormFile file, CancellationToken cancellationToken);
+    Task DeleteFileAsync(string photoLink, CancellationToken token);
+    Task<string> SaveFileAsync(IFormFile file, CancellationToken token);
 }

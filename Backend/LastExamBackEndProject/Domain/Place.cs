@@ -8,8 +8,8 @@ public class Place : PlaceIdentity
     public string Description { get; private set; }
     public string TitlePhotoLink { get; private set; }
     public float Rate { get; private set; }
-    public List<string>? Photos { get; private set; }
-    public List<Review>? Reviews { get; private set; }
+    public List<string> Photos { get; private set; }
+    public List<Review> Reviews { get; private set; }
 
     private Place(int id, string title, string description, string photoLink) : base(id)
     {
@@ -17,8 +17,8 @@ public class Place : PlaceIdentity
         Description = description;
         TitlePhotoLink = photoLink;
         Rate = 0.0f;
-        Photos = null;
-        Reviews = null;
+        Photos = new List<string>();
+        Reviews = new List<Review>();
     }
 
     protected Place(int id, string title, float rate, string description, string photoLink, List<string> photos, List<Review> reviews)

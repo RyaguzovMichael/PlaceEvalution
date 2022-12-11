@@ -1,6 +1,7 @@
-﻿using LastExamBackEndProject.Domain;
+﻿using BaseRepository.Models;
+using LastExamBackEndProject.Domain;
 
-namespace LastExamBackEndProject.Infrastructure.Models;
+namespace LastExamBackEndProject.Infrastructure.Models.DbModels;
 
 public class UserDbModel : BaseRepositoryEntity
 {

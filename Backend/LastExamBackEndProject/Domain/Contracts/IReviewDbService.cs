@@ -2,8 +2,8 @@
 
 public interface IReviewDbService
 {
-    Task DeleteReviewAsync(Review review, CancellationToken cancellationToken);
-    Task<ReviewIdentity> GetNewReviewIdentityAsync(PlaceIdentity placeIdentity, UserIdentity userIdentity, CancellationToken cancellationToken);
-    Task<Review> GetReviewByIdAsync(int id, CancellationToken cancellationToken);
-    Task<Review> GetReviewByIdentityAsync(ReviewIdentity identity, CancellationToken cancellationToken);
+    Task DeleteReviewAsync(Review review, CancellationToken token);
+    Task<ReviewIdentity> GetNewReviewIdentityAsync(PlaceIdentity placeIdentity, UserIdentity userIdentity, CancellationToken token);
+    Task<Review> GetReviewByIdAsync(int id, CancellationToken token);
+    Task<Review> GetReviewByIdentityAsync(ReviewIdentity identity, CancellationToken token);
 }

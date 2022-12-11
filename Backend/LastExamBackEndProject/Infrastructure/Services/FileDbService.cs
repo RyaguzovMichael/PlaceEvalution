@@ -16,7 +16,7 @@ public class FileDbService : IFileDbService
         }
     }
 
-    public Task DeleteFileAsync(string photoLink, CancellationToken cancellationToken)
+    public Task DeleteFileAsync(string photoLink, CancellationToken token)
     {
         string path = Path.Combine(_directoryPath, photoLink);
         if (File.Exists(path))
@@ -26,12 +26,12 @@ public class FileDbService : IFileDbService
         return Task.CompletedTask;
     }
 
-    public async Task<string> SaveFileAsync(IFormFile file, CancellationToken cancellationToken)
+    public async Task<string> SaveFileAsync(IFormFile file, CancellationToken token)
     {
         CheckFileExtensions(file);
         string path = Path.Combine(_directoryPath, file.FileName);
         using var fileStream = new FileStream(path, FileMode.Create);
-        await file.CopyToAsync(fileStream, cancellationToken);
+        await file.CopyToAsync(fileStream, token);
         return file.FileName;
     }
 

@@ -13,22 +13,22 @@ public class ReviewFactory
     }
 
     public async Task<Review> CreateReviewAsync
-        (int rate, string reviewText,PlaceIdentity placeIdentity, UserIdentity userIdentity, CancellationToken cancellationToken)
+        (int rate, string reviewText,PlaceIdentity placeIdentity, UserIdentity userIdentity, CancellationToken token)
     {
         reviewText.VerifyStringLength(300, 3);
 
-        ReviewIdentity identity = await _reviewDbService.GetNewReviewIdentityAsync(placeIdentity, userIdentity, cancellationToken);
+        ReviewIdentity identity = await _reviewDbService.GetNewReviewIdentityAsync(placeIdentity, userIdentity, token);
 
         return Review.Create(identity, rate, reviewText, userIdentity);
     }
 
-    public async Task<Review> GetReviewAsync(ReviewIdentity identity, CancellationToken cancellationToken)
+    public async Task<Review> GetReviewAsync(ReviewIdentity identity, CancellationToken token)
     {
-        return await _reviewDbService.GetReviewByIdentityAsync(identity, cancellationToken);
+        return await _reviewDbService.GetReviewByIdentityAsync(identity, token);
     }
 
-    public async Task<Review> GetReviewAsync(int id, CancellationToken cancellationToken)
+    public async Task<Review> GetReviewAsync(int id, CancellationToken token)
     {
-        return await _reviewDbService.GetReviewByIdAsync(id, cancellationToken);
+        return await _reviewDbService.GetReviewByIdAsync(id, token);
     }
 }

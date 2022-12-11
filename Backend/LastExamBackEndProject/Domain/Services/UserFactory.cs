@@ -15,33 +15,33 @@ public class UserFactory
         _userDbService = userDbService;
     }
 
-    public async Task<User> CreateUserAsync(string login, string password, CancellationToken cancellationToken)
+    public async Task<User> CreateUserAsync(string login, string password, CancellationToken token)
     {
         login.VerifyStringLength(50, 3);
         password.VerifyStringLength(50, 3);
-        if (!await _userDbService.IsLoginUniqueAsync(login, cancellationToken))
+        if (!await _userDbService.IsLoginUniqueAsync(login, token))
         {
             throw new ValidationDataException("Login is not unique");
         }
 
-        UserIdentity identity = await _userDbService.GetNewUserIdentityAsync(cancellationToken);
+        UserIdentity identity = await _userDbService.GetNewUserIdentityAsync(token);
 
         return User.Create(identity, login, password);
     }
 
-    public async Task<User> GetUserAsync(string login, CancellationToken cancellationToken)
+    public async Task<User> GetUserAsync(string login, CancellationToken token)
     {
-        return await _userDbService.GetUserByLoginAsync(login, cancellationToken);
+        return await _userDbService.GetUserByLoginAsync(login, token);
     }
 
-    public async Task<User> GetUserAsync(UserIdentity identity, CancellationToken cancellationToken)
+    public async Task<User> GetUserAsync(UserIdentity identity, CancellationToken token)
     {
-        return await _userDbService.GetUserByIdentityAsync(identity, cancellationToken);
+        return await _userDbService.GetUserByIdentityAsync(identity, token);
     }
 
-    public async Task<Customer> GetCustomerAsync(UserIdentity identity, CancellationToken cancellationToken)
+    public async Task<Customer> GetCustomerAsync(UserIdentity identity, CancellationToken token)
     {
-        return await _userDbService.GetCustomerByIdentityAsync(identity, cancellationToken);
+        return await _userDbService.GetCustomerByIdentityAsync(identity, token);
     }
 
     internal Customer GetCustomer(UserIdentity identity)

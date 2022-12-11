@@ -1,7 +1,6 @@
 ﻿using LastExamBackEndProject.API.Contracts;
 using LastExamBackEndProject.Domain.Contracts;
 using LastExamBackEndProject.Domain.Services;
-using LastExamBackEndProject.Infrastructure.Repositories;
 using LastExamBackEndProject.Infrastructure.Services;
 
 namespace LastExamBackEndProject.API.DependencyInjection;

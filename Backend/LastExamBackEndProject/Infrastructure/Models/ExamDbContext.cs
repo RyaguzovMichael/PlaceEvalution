@@ -1,21 +1,21 @@
 ﻿using LastExamBackEndProject.Common.Extensions;
-using LastExamBackEndProject.Infrastructure.Models;
 using LastExamBackEndProject.Infrastructure.Models.DbMaps;
+using LastExamBackEndProject.Infrastructure.Models.DbModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace LastExamBackEndProject.Infrastructure.DbContexts;
+namespace LastExamBackEndProject.Infrastructure.Models;
 
-public class ExamDbContext : DbContext
+public class DataBaseContext : DbContext
 {
     public DbSet<UserDbModel> Users { get; set; }
     public DbSet<PlaceDbModel> Places { get; set; }
     public DbSet<ReviewDbModel> Reviews { get; set; }
 
-    public ExamDbContext(DbContextOptions<ExamDbContext> options) : base(options) 
+    public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
     {
         Database.Migrate();
     }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

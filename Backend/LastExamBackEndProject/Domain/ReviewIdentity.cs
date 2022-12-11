@@ -1,6 +1,6 @@
 ﻿namespace LastExamBackEndProject.Domain;
 
-public class ReviewIdentity
+public abstract class ReviewIdentity
 {
     public int Id { get; private set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace LastExamBackEndProject.Domain;
 
-public class PlaceIdentity
+public abstract class PlaceIdentity
 {
     public int Id { get; set; }
 

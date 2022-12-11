@@ -1,130 +1,148 @@
-﻿using LastExamBackEndProject.Common.Exceptions;
+﻿using AutoMapper;
+using BaseRepository;
+using LastExamBackEndProject.Common.Exceptions;
 using LastExamBackEndProject.Domain;
 using LastExamBackEndProject.Domain.Contracts;
+using LastExamBackEndProject.Infrastructure.Abstractions;
 using LastExamBackEndProject.Infrastructure.Models;
-using LastExamBackEndProject.Infrastructure.Models.DomainEntities;
-using LastExamBackEndProject.Infrastructure.Repositories;
+using LastExamBackEndProject.Infrastructure.Models.DbModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace LastExamBackEndProject.Infrastructure.Services;
 
-public class PlaceDbService : IPalceDbService
+public class PlaceDbService : BaseRepository<PlaceDbModel, DataBaseContext>, IPlaceRepository, IPalceDbService
 {
-    private readonly PlaceRepository _placeRepository;
+    private readonly IReviewRepository _reviewRepository;
+    private readonly IMapper _mapper;
 
-    public PlaceDbService(PlaceRepository placeRepository)
+    public PlaceDbService(DataBaseContext dbContext, IReviewRepository reviewRepository, IMapper mapper) : base(dbContext)
     {
-        _placeRepository = placeRepository;
+        _reviewRepository = reviewRepository;
+        _mapper = mapper;
     }
 
-    public async Task DeletePlace(PlaceIdentity placeIdentity, CancellationToken cancellationToken)
+    public async Task DeletePlace(PlaceIdentity placeIdentity, CancellationToken token)
     {
-        PlaceDbModel? place = await _placeRepository.GetByIdAsync(placeIdentity.Id, cancellationToken);
+        PlaceDbModel? place = await GetByIdAsync(placeIdentity.Id, token);
         if (place is not null)
         {
-            await _placeRepository.DeleteAsync(place, cancellationToken);
+            await DeleteAsync(place, token);
         }
     }
 
-    public async Task<List<Place>> GetBatchOfPlacesAsync(int pageNumber, int pageSize, string findString, CancellationToken cancellationToken)
+    public async Task<List<Place>> GetBatchOfPlacesAsync(int pageNumber, int pageSize, string findString, CancellationToken token)
     {
-        List<PlaceDbModel> places = await _placeRepository.GetFilteredBatchOfData(pageSize, pageNumber, findString, cancellationToken);
-        List<PlaceEntity> entities = new();
-        foreach (var place in places)
+        List<PlaceDbModel> models = await GetFilteredBatchOfData(pageSize, pageNumber, findString, token);
+        List<Place> places = new();
+        foreach (var place in models)
         {
-            entities.Add(CreatePlaceEntity(place));
+            places.Add(ConvertDbModelToPlace(place));
         }
-        return entities.Select(e => (Place)e).ToList();
+        return places;
     }
 
-    public async Task<PlaceIdentity> GetNewPlaceIdentityAsync(CancellationToken cancellationToken)
+    public async Task<PlaceIdentity> GetNewPlaceIdentityAsync(CancellationToken token)
     {
-        PlaceDbModel model = await _placeRepository.AddAsync(new PlaceDbModel(), cancellationToken);
-        return new PlaceIdentity(model.Id);
+        PlaceDbModel model = await AddAsync(new PlaceDbModel(), token);
+        return ConvertDbModelToPlace(model);
     }
 
-    public async Task<Place> GetPlaceByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<Place> GetPlaceByIdAsync(int id, CancellationToken token)
     {
-        PlaceDbModel? model = await _placeRepository.GetByIdAsync(id, cancellationToken);
+        PlaceDbModel? model = await GetByIdAsync(id, token);
         if (model is null)
         {
             throw new DatabaseException($"Not finde place with id {id}");
         }
-        return CreatePlaceEntity(model);
+        return ConvertDbModelToPlace(model);
     }
 
-    public async Task<Place> GetPlaceByIdentityAsync(PlaceIdentity identity, CancellationToken cancellationToken)
+    public async Task<Place> GetPlaceByIdentityAsync(PlaceIdentity identity, CancellationToken token)
     {
-        PlaceDbModel? model = await _placeRepository.GetByIdAsync(identity.Id, cancellationToken);
+        PlaceDbModel? model = await GetByIdAsync(identity.Id, token);
         if (model is null)
         {
             throw new DatabaseException($"Not finde place with id {identity.Id}");
         }
-        return CreatePlaceEntity(model);
+        return ConvertDbModelToPlace(model);
     }
 
-    public async Task<bool> IsTitleUniqueAsync(string title, CancellationToken cancellationToken)
+    public async Task<bool> IsTitleUniqueAsync(string title, CancellationToken token)
     {
-        return await _placeRepository.GetFirstOrDefaultAsync(p => p.Title == title, cancellationToken) is null;
+        return await GetFirstOrDefaultAsync(p => p.Title == title, token) is null;
     }
 
-    public async Task SavePlace(Place place, CancellationToken cancellationToken)
+    public async Task SavePlace(Place place, CancellationToken token)
     {
-        PlaceDbModel? model = await _placeRepository.GetByIdAsync(place.Id, cancellationToken);
+        PlaceDbModel? model = await GetByIdAsync(place.Id, token);
         if (model is null)
         {
             throw new DatabaseException($"Not finde place with id {place.Id}");
         }
         model.Title = place.Title;
         model.Rate = place.Rate;
-        model.Reviews = GetReviewDbModelList(place.Reviews ?? new List<Review>());
+        model.Reviews = _mapper.Map<List<ReviewDbModel>>(place.Reviews);
         model.Description = place.Description;
         model.TitlePhotoLink = place.TitlePhotoLink;
         model.Photos = place.Photos;
-        await _placeRepository.UpdateAsync(model, cancellationToken);
+        await UpdateAsync(model, token);
     }
 
-    private static PlaceEntity CreatePlaceEntity(PlaceDbModel place)
+
+
+
+    protected override IQueryable<PlaceDbModel> FilterByString(IQueryable<PlaceDbModel> query, string? filterString)
     {
-        return new PlaceEntity(place.Id,
-                               place.Title,
-                               place.Rate,
-                               place.Description,
-                               place.TitlePhotoLink,
-                               place.Photos ?? new List<string>(),
-                               GetReviewEntitiesList(place.Reviews ?? new List<ReviewDbModel>()).Select(e => (Review)e).ToList());
+        return filterString is null ? query : query.Where(u => u.Title.Contains(filterString)
+                                                            || u.Description.Contains(filterString));
     }
 
-    private static List<ReviewEntity> GetReviewEntitiesList(ICollection<ReviewDbModel> reviews)
+    public async override Task<PlaceDbModel?> GetByIdAsync(int id, CancellationToken token)
     {
-        List<ReviewEntity> reviewsEntities = new();
+        PlaceDbModel? model = await Context.Places.FirstOrDefaultAsync(p => p.Id == id, token);
+        if (model is not null)
+        {
+            model.Reviews = await _reviewRepository.GetReviewsOfPlaceAsync(model.Id, token);
+        }
+        return model;
+    }
+
+    public override async Task<List<PlaceDbModel>> GetFilteredBatchOfData(int pageSize, int page, string? filterString = null, CancellationToken token = default)
+    {
+        List<PlaceDbModel> places = await base.GetFilteredBatchOfData(pageSize, page, filterString, token);
+        foreach (var place in places)
+        {
+            place.Reviews = await _reviewRepository.GetReviewsOfPlaceAsync(place.Id, token);
+        }
+        return places;
+    }
+
+    public Place ConvertDbModelToPlace(PlaceDbModel model)
+    {
+        return new PlaceEntity(model.Id,
+                               model.Title,
+                               model.Rate,
+                               model.Description,
+                               model.TitlePhotoLink,
+                               model.Photos,
+                               GetReviewsList(model.Reviews));
+    }
+
+    private List<Review> GetReviewsList(ICollection<ReviewDbModel> reviews)
+    {
+        List<Review> reviewsEntities = new();
         foreach (var review in reviews)
         {
-            reviewsEntities.Add(
-                new ReviewEntity(review.Id, review.Rate, review.ReviewText, new UserIdentity(review.UserId, review.User.Role), review.ReviewDate)
-            );
+            reviewsEntities.Add(_reviewRepository.ConvertDbModelToReview(review));
         }
-
         return reviewsEntities;
     }
 
-    private static List<ReviewDbModel> GetReviewDbModelList(ICollection<Review> reviews)
+    private class PlaceEntity : Place
     {
-        List<ReviewDbModel> reviewsEntities = new();
-        foreach (var review in reviews)
+        public PlaceEntity(int id, string title, float rate, string description, string photoLink, List<string> photos, List<Review> reviews)
+            : base(id, title, rate, description, photoLink, photos, reviews)
         {
-            reviewsEntities.Add(new ReviewDbModel()
-            {
-                Id = review.Id,
-                Rate = review.Rate,
-                ReviewText = review.ReviewText,
-                UserId = review.User.Id,
-                ReviewDate = review.ReviewDate,
-                CreatedDate = DateTime.Now,
-                LastModifiedDate = DateTime.Now,
-            });
         }
-
-        return reviewsEntities;
     }
-
 }

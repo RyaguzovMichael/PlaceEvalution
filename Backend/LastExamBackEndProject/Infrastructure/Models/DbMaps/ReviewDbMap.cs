@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LastExamBackEndProject.Infrastructure.Models.DbModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace LastExamBackEndProject.Infrastructure.Models.DbMaps;

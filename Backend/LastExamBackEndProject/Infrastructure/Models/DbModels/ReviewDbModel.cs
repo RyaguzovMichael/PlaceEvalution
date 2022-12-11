@@ -1,4 +1,6 @@
-﻿namespace LastExamBackEndProject.Infrastructure.Models;
+﻿using BaseRepository.Models;
+
+namespace LastExamBackEndProject.Infrastructure.Models.DbModels;
 
 public class ReviewDbModel : BaseRepositoryEntity
 {

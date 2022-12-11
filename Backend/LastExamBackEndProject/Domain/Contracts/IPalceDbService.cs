@@ -2,11 +2,11 @@
 
 public interface IPalceDbService
 {
-    Task DeletePlace(PlaceIdentity placeIdentity, CancellationToken cancellationToken);
-    Task<List<Place>> GetBatchOfPlacesAsync(int pageNumber, int pageSize, string findString, CancellationToken cancellationToken);
-    Task<PlaceIdentity> GetNewPlaceIdentityAsync(CancellationToken cancellationToken);
-    Task<Place> GetPlaceByIdAsync(int id, CancellationToken cancellationToken);
-    Task<Place> GetPlaceByIdentityAsync(PlaceIdentity identity, CancellationToken cancellationToken);
-    Task<bool> IsTitleUniqueAsync(string title, CancellationToken cancellationToken);
-    Task SavePlace(Place place, CancellationToken cancellationToken);
+    Task DeletePlace(PlaceIdentity placeIdentity, CancellationToken token);
+    Task<List<Place>> GetBatchOfPlacesAsync(int pageNumber, int pageSize, string findString, CancellationToken token);
+    Task<PlaceIdentity> GetNewPlaceIdentityAsync(CancellationToken token);
+    Task<Place> GetPlaceByIdAsync(int id, CancellationToken token);
+    Task<Place> GetPlaceByIdentityAsync(PlaceIdentity identity, CancellationToken token);
+    Task<bool> IsTitleUniqueAsync(string title, CancellationToken token);
+    Task SavePlace(Place place, CancellationToken token);
 }

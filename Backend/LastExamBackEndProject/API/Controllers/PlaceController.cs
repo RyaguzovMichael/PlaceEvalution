@@ -13,7 +13,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace LastExamBackEndProject.API.Controllers;
 
-[Route("[controller]/[action]")]
+[Route("api/[controller]/[action]")]
 public class PlaceController : Controller
 {
     private readonly IMapper _mapper;
